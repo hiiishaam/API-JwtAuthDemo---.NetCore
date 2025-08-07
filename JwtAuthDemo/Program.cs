@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<UserService>();
 
 
 var app = builder.Build();

@@ -68,14 +68,13 @@ namespace JwtAuthDemo.Services
                 existingProduct.Stock = product.Stock;
                 existingProduct.Description = product.Description;
                 existingProduct.ImageUrl = product.ImageUrl;
-
                 _db.SaveChanges();
 
                 return existingProduct;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw; // Tu peux améliorer ça en lançant une exception plus explicite si tu veux
+                throw new Exception("Error upduting product: " + ex.Message);
             }
         }
 
@@ -106,9 +105,12 @@ namespace JwtAuthDemo.Services
             try
             {
                 var product = _db.Products.FirstOrDefault(p => p.Id == id);
-                _db.Products.Remove(product);
-                _db.SaveChanges();
-                return product;
+               
+                    _db.Products.Remove(product);
+                    _db.SaveChanges();
+                     return product;
+                
+                    
             }
             catch (Exception ex)
             {
