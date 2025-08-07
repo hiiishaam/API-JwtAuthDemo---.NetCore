@@ -1,5 +1,6 @@
 ﻿using JwtAuthDemo.Data;
 using JwtAuthDemo.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace JwtAuthDemo.Services
 {
@@ -47,12 +48,12 @@ namespace JwtAuthDemo.Services
                 _db.SaveChanges();
                 return existingUser;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("Error modify User: " + ex.Message);
             }
 
-        } 
+        }
         public void DeleteUser(int id)
         {
             var user = _db.Users.FirstOrDefault(x => x.Id == id);
@@ -61,6 +62,22 @@ namespace JwtAuthDemo.Services
                 _db.Users.Remove(user);
                 _db.SaveChanges();
             }
+        }
+        public User GetUserByEmail(string email)
+        {
+            try {
+                var utilisateur =  _db.Users.FirstOrDefault(u => u.Email == email);
+                if (utilisateur ==null)
+                {
+                    throw new ArgumentException("Email cannot be null or empty", nameof(email));
+                }
+                return utilisateur;
+            }
+            catch (Exception ex)
+            {
+              throw new Exception("Error retrieving user by email: " + ex.Message);
+            }
+            
         }
     }
 }
